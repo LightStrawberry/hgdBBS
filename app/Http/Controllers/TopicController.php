@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Tag;
+use App\Topic;
+use DB;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class PostController extends Controller
+class TopicController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +19,10 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $topics = Topic::all();
+        //$roles = Topic::find(2)->tags;
+        //dd($roles);
+        return view("index",compact('topics'));
     }
 
     /**
@@ -26,7 +32,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        $tags = Tag::lists('name', 'id');
+        echo $tags;
+        return view("Topic",compact('tags'));
     }
 
     /**
@@ -37,7 +45,12 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //dd($request->all());
+        $input = $request->all();
+        $input['intro'] = mb_substr($request->get('content'),0,64);
+        $topic = Topic::create($input);
+        $topic->tags()->attach($request->input('tag_list'));
+        return redirect('/');
     }
 
     /**
@@ -48,7 +61,9 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        $topic = Topic::find($id);
+        dd($topic);
+        //return view('xx',compact('topic'));
     }
 
     /**

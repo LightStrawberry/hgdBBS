@@ -15,7 +15,11 @@ Route::get('/', 'HomeController@index');
 
 Route::get('home', 'HomeController@index');
 
-Route::post('user/store','UserController@store');
+Route::get('topics', 'TopicController@index');
+Route::get('topics/create', 'TopicController@create');
+Route::post('topics/store', 'TopicController@store');
+Route::get('topics/{id}', 'TopicController@show');
+
 
 Route::get('user/login', 'Auth\AuthController@getLogin');
 Route::post('user/login', 'Auth\AuthController@postLogin');
