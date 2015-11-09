@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Topic extends Model
 {
 
-	protected $fillable = array('title', 'content');
+	protected $fillable = ['title', 'content', 'published_at', 'user_id'];
 
     public function tags()
     {

@@ -36,11 +36,11 @@ class UserController extends Controller
 
     public function checkout()
     {
-        echo Input::get('email');
-        echo Input::get('password');
-        if (Auth::attempt(array('email'=>Input::get('email'), 'password'=>Input::get('password')))) 
+        $email = Input::get('email');
+        $password = Input::get('password');
+        if (Auth::attempt(['email' => $email, 'password' => $password])) 
         {  
-            echo "string";
+            return redirect()->intended('/');
         }
         else
         {
@@ -74,7 +74,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::find($id);
+        $user = User::findOrFail($id);
+        $topics = $user->topics;
+        //$res = array_merge($user, $topics);
         return $user;
     }
 

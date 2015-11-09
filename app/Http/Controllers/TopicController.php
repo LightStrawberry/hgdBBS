@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Tag;
 use App\Topic;
-use DB;
+use Auth;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -22,7 +22,7 @@ class TopicController extends Controller
         $topics = Topic::all();
         //$roles = Topic::find(2)->tags;
         //dd($roles);
-        return view("index",compact('topics'));
+        return view("header",compact('topics'));
     }
 
     /**
@@ -34,6 +34,7 @@ class TopicController extends Controller
     {
         $tags = Tag::lists('name', 'id');
         echo $tags;
+        echo Auth::user()->id;
         return view("Topic",compact('tags'));
     }
 
@@ -47,8 +48,8 @@ class TopicController extends Controller
     {
         //dd($request->all());
         $input = $request->all();
-        $input['intro'] = mb_substr($request->get('content'),0,64);
-        $topic = Topic::create($input);
+        $input['title'] = mb_substr($request->get('content'),0,64);
+        $topic = Topic::create(array_merge(['user_id' => \Auth::user()->id], $request->all()));
         $topic->tags()->attach($request->input('tag_list'));
         return redirect('/');
     }

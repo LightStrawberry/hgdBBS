@@ -25,7 +25,7 @@ class AddTopicTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('topic_tag', function(Blueprint $table) {
+        Schema::create('tag_topic', function(Blueprint $table) {
             $table->integer('topic_id')->unsigned()->index();
             $table->foreign('topic_id')->references('id')->on('topics')->onDelete('cascade');
             $table->integer('tag_id')->unsigned()->index();

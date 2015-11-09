@@ -1,3 +1,4 @@
+
 @foreach($topics as $topic)
 	<h2 class="post-title pad">
 	    <a href="/topics/{{ $topic->id }}"> {{ $topic->title }}</a>

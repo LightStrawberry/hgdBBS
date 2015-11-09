@@ -20,9 +20,10 @@ Route::get('topics/create', 'TopicController@create');
 Route::post('topics/store', 'TopicController@store');
 Route::get('topics/{id}', 'TopicController@show');
 
-
+Route::get('user/{id}', 'UserController@show');
 Route::get('user/login', 'Auth\AuthController@getLogin');
-Route::post('user/login', 'Auth\AuthController@postLogin');
+Route::post('user/login', 'UserController@checkout');
+//Route::post('user/login', 'Auth\AuthController@postLogin');
 Route::get('user/logout', 'Auth\AuthController@getLogout');
 
 // Registration routes...

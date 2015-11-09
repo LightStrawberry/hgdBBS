@@ -1,4 +1,5 @@
 
+
 {!! Html::style('css/select2.css') !!}
 {!! Html::script('js/jquery.js') !!}
 {!! Html::script('js/select2.min.js') !!}

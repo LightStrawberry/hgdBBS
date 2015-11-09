@@ -1,4 +1,4 @@
-@include('head')
+@include('header')
 
 {!! Form::open(['url'=>'user/login']) !!}
    <div class="form-group">

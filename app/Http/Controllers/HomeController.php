@@ -22,7 +22,7 @@ class HomeController extends Controller
         if (Auth::check()) {
             echo "fuck";
         }
-        return view("header");
+        //return view("header");
     }
 
     /**
