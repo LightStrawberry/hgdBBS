@@ -1,5 +1,4 @@
 {!! Html::style('css/style.css') !!}
-@extends('index')
 
 <div class="header">
 	<nav class="navbar navbar-inverse navbar-static-top navbar-default">

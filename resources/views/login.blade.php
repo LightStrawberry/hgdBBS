@@ -1,6 +1,6 @@
 @include('header')
 
-{!! Form::open(['url'=>'user/login']) !!}
+{!! Form::open(['url'=>'login']) !!}
    <div class="form-group">
        {!! Form::label('email','账号:') !!}
        {!! Form::text('email',null,['class'=>'form-control']) !!}

@@ -15,17 +15,22 @@ Route::get('/', 'HomeController@index');
 
 Route::get('home', 'HomeController@index');
 
-Route::get('topics', 'TopicController@index');
-Route::get('topics/create', 'TopicController@create');
-Route::post('topics/store', 'TopicController@store');
-Route::get('topics/{id}', 'TopicController@show');
+Route::resource('topic', 'TopicController');
 
 Route::get('user/{id}', 'UserController@show');
-Route::get('user/login', 'Auth\AuthController@getLogin');
-Route::post('user/login', 'UserController@checkout');
+Route::get('login', 'Auth\AuthController@getLogin');
+Route::post('login', 'UserController@checkout');
 //Route::post('user/login', 'Auth\AuthController@postLogin');
-Route::get('user/logout', 'Auth\AuthController@getLogout');
+Route::get('logout', 'Auth\AuthController@getLogout');
 
 // Registration routes...
-Route::get('user/register', 'Auth\AuthController@getRegister');
-Route::post('user/register', 'Auth\AuthController@postRegister');
+Route::get('register', 'Auth\AuthController@getRegister');
+Route::post('register', 'Auth\AuthController@postRegister');
+
+
+Route::get('node', 'nodeController@index');
+Route::get('node/{node}', 'nodeController@show');
+
+
+Route::get('recent', 'TopicController@recent');
+//Route::get('recent/{page}', 'TopicController@recent');

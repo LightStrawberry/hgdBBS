@@ -5,7 +5,7 @@
 {!! Html::script('js/select2.min.js') !!}
 {!! Html::script('js/index.js') !!}
 
-{!! Form::open(['url'=>'topics/store']) !!}
+{!! Form::open(['url'=>'topic']) !!}
   <div class="form-group">
     {!! Form::label('title','title:') !!}
     {!! Form::text('title',null,['class'=>'form-control']) !!}

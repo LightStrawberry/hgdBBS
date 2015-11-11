@@ -4,14 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Tag;
-use App\Topic;
+use DB;
 use App\Node;
 use Auth;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class TopicController extends Controller
+class NodeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,10 +19,17 @@ class TopicController extends Controller
      */
     public function index()
     {
-        $topics = Topic::all();
+        $node = Node::all();
+
+        return $node;
         //$roles = Topic::find(2)->tags;
         //dd($roles);
-        return view("index",compact('topics'));
+        //return view("header",compact('topics'));
+    }
+
+    public function get_children()
+    {
+
     }
 
     /**
@@ -33,11 +39,7 @@ class TopicController extends Controller
      */
     public function create()
     {
-        $tags = Tag::lists('name', 'id');
-        //$node = Node::lists('name', 'id');
-        //var_dump($node);
-        //echo Auth::user()->id;
-        return view("Topic",compact('tags'));
+
     }
 
     /**
@@ -48,12 +50,7 @@ class TopicController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->all());
-        $input = $request->all();
-        $input['title'] = mb_substr($request->get('content'),0,64);
-        $topic = Topic::create(array_merge(['user_id' => \Auth::user()->id], $request->all()));
-        $topic->tags()->attach($request->input('tag_list'));
-        return redirect('/');
+
     }
 
     /**
@@ -62,10 +59,13 @@ class TopicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($node)
     {
-        $topic = Topic::find($id);
-        return $topic->toJson();
+        $info = (array)DB::table('nodes')->where('node', $node)->first();
+        $id = $info['id'];
+        $topic = (array)DB::table('topics')->where('node_id', $id)->get();
+        $data = array_merge($info, $topic);
+        return $data;
         //return view('xx',compact('topic'));
     }
 
@@ -101,12 +101,5 @@ class TopicController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function recent()
-    {
-        $topics = Topic::paginate(5);
-        $topics->setPath('recent');
-        return $topics->toJson();
     }
 }

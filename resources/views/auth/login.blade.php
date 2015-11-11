@@ -1,4 +1,4 @@
-<form method="POST" action="/user/login">
+<form method="POST" action="login">
     {!! csrf_field() !!}
 
     <div>
