@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Auth;
+use Validator;
 use App\Comment;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -41,21 +42,18 @@ class CommentController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
-        dd($input);
-        die();
-        $input['title'] = mb_substr($request->get('content'),0,64);
-        $validator = Validator::make(
-            array('title' => 'Dayle'),
-            array('title' => 'required|min:5')  
-        );
-        if($validator->passes())
+        $id = $request->topic_id;
+        $v = Validator::make($request->all(), [
+            'content' => 'required|min:8|max:255',
+        ]);
+        if ($v->fails())
         {
-            $topic = Topic::create(array_merge(['user_id' => \Auth::user()->id], $request->all()));
-            $topic->tags()->attach($request->input('tag_list'));
-            return redirect('/');
+            return redirect()->back()->withErrors($v->errors());
+        }else{
+            $comment = Comment::create(array_merge(['user_id' => \Auth::user()->id], $request->all()));
+            //$topic->tags()->attach($request->input('tag_list'));
+            return redirect('/topic/'.$id);
         }
-        $messages = $validator->messages();
-        return $messages;
     }
 
     /**

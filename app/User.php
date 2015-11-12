@@ -39,7 +39,6 @@ class User extends Model implements AuthenticatableContract,
 
     public function topics()
     {
-        //return "a";
         return $this->hasMany('App\Topic');
     }
 

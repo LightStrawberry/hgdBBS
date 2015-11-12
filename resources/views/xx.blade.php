@@ -5,14 +5,30 @@
 	    <li>{{ $tag->name }}</li>
 	@endforeach
 @endif
+<br>
+{{ $topic->node->name }}
+{{ $topic->node->node }}
+<br>
+@if($topic->comments)
+	@foreach($topic->comments as $comment)
+		<p>{{ $comment->user->email }}</p>
+		<img src="{{ $comment->user->avatar_path }}"/>
+	    <p>{{ $comment->content }}</p>
+	@endforeach
+@endif
 
 {!! Form::open(['url'=>'comment']) !!}
    <div class="form-group">
-       {!! Form::label('comment','评论:') !!}
-       {!! Form::text('comment',null,['class'=>'form-control']) !!}
+       {!! Form::label('content','评论:') !!}
+       {!! Form::text('content',null,['class'=>'form-control']) !!}
    </div>
-   {!! Form::hidden('id', $current_id) !!}
+   {!! Form::hidden('topic_id', $topic->id) !!}
+   {!! Form::hidden('number', $topic->comments->count()+1) !!}
    <div class="form-group">
        {!! Form::submit('回复',['class'=>'btn btn-success form-control']) !!}
    </div>
 {!! Form::close() !!}
+
+@if ($current_id == $topic->user_id)
+	
+@endif

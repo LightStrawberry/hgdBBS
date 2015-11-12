@@ -17,6 +17,11 @@ class Topic extends Model
 
     public function comments()
     {
-        return $this->hasMany('App\comment');
+        return $this->hasMany('App\Comment');
+    }
+
+    public function node()
+    {
+        return $this->belongsTo('App\Node');
     }
 }

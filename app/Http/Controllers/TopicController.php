@@ -57,8 +57,7 @@ class TopicController extends Controller
         if ($v->fails())
         {
             return redirect()->back()->withErrors($v->errors());
-        }else
-        {
+        }else{
             $topic = Topic::create(array_merge(['user_id' => \Auth::user()->id], $request->all()));
             $topic->tags()->attach($request->input('tag_list'));
             return redirect('/');
@@ -74,8 +73,9 @@ class TopicController extends Controller
     public function show($id)
     {
         $topic = Topic::find($id);
-        $current_id = Auth::user()->id;
+        //$comments = Topic::comments()->id;
         //return $topic->toJson();
+        $current_id = Auth::user()->id;
         return view('xx',compact('topic', 'current_id'));
     }
 
@@ -110,7 +110,13 @@ class TopicController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $topic = Topic::find($id);
+        if(Auth::user()->id = $topic->id)
+        {
+            $topic = Topic::find($id);
+            $topic->delete();
+            return redirect('/');
+        }
     }
 
     public function recent()
