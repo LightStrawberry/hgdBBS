@@ -4,15 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Tag;
-use App\Topic;
-use App\Node;
 use Auth;
-use Validator;
+use App\Comment;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class TopicController extends Controller
+class CommentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,10 +18,8 @@ class TopicController extends Controller
      */
     public function index()
     {
-        $topics = Topic::all();
-        //$roles = Topic::find(2)->tags;
-        //dd($roles);
-        return view("index",compact('topics'));
+        $comment = Comment::all();
+        //return view("index",compact('topics'));
     }
 
     /**
@@ -34,10 +29,7 @@ class TopicController extends Controller
      */
     public function create()
     {
-        $tags = Tag::lists('name', 'id');
-        $nodes = Node::lists('name', 'id');
 
-        return view("Topic",compact('tags', 'nodes'));
     }
 
     /**
@@ -49,20 +41,21 @@ class TopicController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
+        dd($input);
+        die();
         $input['title'] = mb_substr($request->get('content'),0,64);
-        $v = Validator::make($request->all(), [
-            'title' => 'required|max:255',
-            'content' => 'required',
-        ]);
-        if ($v->fails())
-        {
-            return redirect()->back()->withErrors($v->errors());
-        }else
+        $validator = Validator::make(
+            array('title' => 'Dayle'),
+            array('title' => 'required|min:5')  
+        );
+        if($validator->passes())
         {
             $topic = Topic::create(array_merge(['user_id' => \Auth::user()->id], $request->all()));
             $topic->tags()->attach($request->input('tag_list'));
             return redirect('/');
         }
+        $messages = $validator->messages();
+        return $messages;
     }
 
     /**
@@ -73,10 +66,7 @@ class TopicController extends Controller
      */
     public function show($id)
     {
-        $topic = Topic::find($id);
-        $current_id = Auth::user()->id;
-        //return $topic->toJson();
-        return view('xx',compact('topic', 'current_id'));
+
     }
 
     /**
@@ -87,7 +77,7 @@ class TopicController extends Controller
      */
     public function edit($id)
     {
-        
+        //
     }
 
     /**
@@ -111,12 +101,5 @@ class TopicController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function recent()
-    {
-        $topics = Topic::paginate(5);
-        $topics->setPath('recent');
-        return $topics->toJson();
     }
 }

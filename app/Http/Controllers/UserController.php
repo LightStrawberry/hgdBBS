@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 /* 我不知道为什么这里就不行 要用下面一句话 */
-//use Illuminate\Http\Request;
-use Request;
+use Illuminate\Http\Request;
+//use Request;
+use Response;
 use Auth;
 use Input;
 use App\User;
@@ -24,11 +25,6 @@ class UserController extends Controller
         return $a;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('user');
@@ -53,12 +49,6 @@ class UserController extends Controller
         return view('login');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $input = request::all();
@@ -66,29 +56,25 @@ class UserController extends Controller
         return;
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $user = User::findOrFail($id);
         $topics = $user->topics;
         //$res = array_merge($user, $topics);
-        return $user;
+        return Response::json(
+                    [
+                        'success' => true,
+                        'msg' => 200,
+                        'data' => $user->toJson(),
+                    ]
+                );
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        //
+        $user = User::findOrFail($id);
+        //dd($user);
+        return view("user_update", compact('user'));
     }
 
     /**
@@ -98,9 +84,15 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        //dd($request->all());
+        $user = User::find($request->id);
+        $user->name = $request->name;
+        $user->bio = $request->bio;
+
+        $user->save();
+        return redirect()->intended('/user/'.$request->id);
     }
 
     /**
@@ -111,6 +103,35 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+        $user->delete();
+    }
+
+    public function avatar()
+    {
+        return view('avatar');
+    }
+
+    public function avatarUpload()
+    {
+        $file = Input::file('image');
+        $input = array('image' => $file);
+        $rules = array(
+            'image' => 'image'
+        );
+        $destinationPath = 'uploads/';
+        $filename = Auth::user()->name."_avatar.jpg";
+        $file->move($destinationPath, $filename);
+
+        $user = Auth::user();
+        $user->avatar_path = asset($destinationPath.$filename);
+        $user->save();
+
+        return Response::json(
+                    [
+                        'success' => true,
+                        'avatar' => asset($destinationPath.$filename),
+                    ]
+                );
     }
 }

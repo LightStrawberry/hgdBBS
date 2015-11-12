@@ -19,6 +19,10 @@
         {!! Form::select('tag_list[]',$tags,null,['class'=>'form-control js-example-basic-multiple','multiple'=>'multiple']) !!}
   </div>
   <div class="form-group">
+        {!! Form::label('node_list','添加节点') !!}
+        {!! Form::select('node_list[]',$nodes,null,['class'=>'form-control js-example-basic-multiple2','multiple'=>'multiple']) !!}
+  </div>
+  <div class="form-group">
     {!! Form::submit('发表',['class'=>'btn btn-success form-control']) !!}
   </div>
 {!! Form::close() !!}
