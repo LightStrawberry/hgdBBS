@@ -75,7 +75,12 @@ class TopicController extends Controller
         $topic = Topic::find($id);
         //$comments = Topic::comments()->id;
         //return $topic->toJson();
-        $current_id = Auth::user()->id;
+        if(Auth::check())
+        {
+            $current_id = Auth::user()->id;
+        }else{
+            $current_id = 0;
+        }
         return view('xx',compact('topic', 'current_id'));
     }
 

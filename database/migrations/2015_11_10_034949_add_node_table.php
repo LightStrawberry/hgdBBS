@@ -15,7 +15,7 @@ class AddNodeTable extends Migration
         Schema::create('nodes', function ($table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('node')->unique();
+            $table->string('node_url')->unique();
             $table->integer('parent_id');
             $table->string('description');
             $table->timestamps();

@@ -25,6 +25,7 @@ Route::delete('user/{id}', 'UserController@destroy');
 Route::put('user/update', 'UserController@update');
 Route::get('login', 'Auth\AuthController@getLogin');
 Route::post('login', 'UserController@checkout');
+Route::get('Account/LogOnForJson', 'UserController@loginOnJson');
 //Route::post('user/login', 'Auth\AuthController@postLogin');
 Route::get('logout', 'Auth\AuthController@getLogout');
 
@@ -36,7 +37,9 @@ Route::get('/avatar/upload','UserController@avatar');
 Route::post('/avatar/upload','UserController@avatarUpload');
 
 Route::get('node', 'nodeController@index');
+Route::get('main_node', 'nodeController@main_node');
 Route::get('node/{node}', 'nodeController@show');
+Route::post('node', 'nodeController@store');
 
 
 Route::get('recent', 'TopicController@recent');

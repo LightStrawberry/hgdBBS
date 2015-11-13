@@ -21,8 +21,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        $a = User::all();
-        return $a;
+        if (Auth::check())
+        {
+            $a = User::all();
+            return $a;
+        }
     }
 
     public function create()
@@ -58,16 +61,19 @@ class UserController extends Controller
 
     public function show($id)
     {
-        $user = User::findOrFail($id);
-        $topics = $user->topics;
-        //$res = array_merge($user, $topics);
-        return Response::json(
-                    [
-                        'success' => true,
-                        'msg' => 200,
-                        'data' => $user->toJson(),
-                    ]
-                );
+        if (Auth::check())
+        {
+            $user = User::findOrFail($id);
+            $topics = $user->topics;
+            //$res = array_merge($user, $topics);
+            return Response::json(
+                        [
+                            'success' => true,
+                            'msg' => 200,
+                            'data' => $user->toJson(),
+                        ]
+                    );
+        }
     }
 
     public function edit($id)
@@ -134,4 +140,29 @@ class UserController extends Controller
                     ]
                 );
     }
+
+    public function loginOnJson()
+    {
+        $email = Input::get('email');
+        $password = Input::get('password');
+        if (Auth::attempt(['email' => $email, 'password' => $password])) 
+        {  
+            return Response::json(
+                        [
+                            'status' => 0,
+                            'message' => "登陆成功",
+                        ]
+                    );
+        }
+        else
+        {
+            return Response::json(
+                        [
+                            'status' => 1,
+                            'message' => "账户或密码错误",
+                        ]
+                    );
+        }
+    }
+
 }
