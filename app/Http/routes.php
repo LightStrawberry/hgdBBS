@@ -23,6 +23,8 @@ Route::get('user/{id}', 'UserController@show');
 Route::get('user/{id}/edit', 'UserController@edit');
 Route::delete('user/{id}', 'UserController@destroy');
 Route::put('user/update', 'UserController@update');
+Route::get('user/mail', 'UserController@sendMail');
+
 Route::get('login', 'Auth\AuthController@getLogin');
 Route::post('login', 'UserController@checkout');
 Route::get('Account/LogOnForJson', 'UserController@loginOnJson');

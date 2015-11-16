@@ -16,13 +16,21 @@
   </div>
   <div class="form-group">
         {!! Form::label('tag_list','选择标签') !!}
-        {!! Form::select('tag_list[]',$tags,null,['class'=>'form-control js-example-basic-multiple','multiple'=>'multiple']) !!}
+        {!! Form::select('tag_list',$tags,null,['class'=>'form-control js-example-basic-multiple','multiple'=>'multiple']) !!}
   </div>
   <div class="form-group">
-        {!! Form::label('node_list','添加节点') !!}
-        {!! Form::select('node_list[]',$nodes,null,['class'=>'form-control js-example-basic-multiple2','multiple'=>'multiple']) !!}
+        {!! Form::label('node','添加节点') !!}
+        {!! Form::select('node',$nodes,null,['class'=>'form-control js-example-basic-multiple2','multiple'=>'multiple']) !!}
   </div>
   <div class="form-group">
     {!! Form::submit('发表',['class'=>'btn btn-success form-control']) !!}
   </div>
 {!! Form::close() !!}
+
+@if($errors->any())
+        <ul class="alert alert-danger">
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+@endif

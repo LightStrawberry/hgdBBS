@@ -52,11 +52,14 @@ class TopicController extends Controller
         $input['title'] = mb_substr($request->get('content'),0,64);
         $v = Validator::make($request->all(), [
             'title' => 'required|max:255',
-            'content' => 'required',
+            'content' => 'required|min:8',
+            'node' => 'required',
+            'tag_list' => 'required',
         ]);
         if ($v->fails())
         {
-            return redirect()->back()->withErrors($v->errors());
+            //return redirect()->back()->withErrors($v->errors());
+            return $v->errors()->toJson();
         }else{
             $topic = Topic::create(array_merge(['user_id' => \Auth::user()->id], $request->all()));
             $topic->tags()->attach($request->input('tag_list'));
@@ -116,7 +119,7 @@ class TopicController extends Controller
     public function destroy($id)
     {
         $topic = Topic::find($id);
-        if(Auth::user()->id = $topic->id)
+        if(Auth::user()->id = $topic->user_id)
         {
             $topic = Topic::find($id);
             $topic->delete();
@@ -126,7 +129,7 @@ class TopicController extends Controller
 
     public function recent()
     {
-        $topics = Topic::paginate(5);
+        $topics = Topic::paginate(10);
         $topics->setPath('recent');
         return $topics->toJson();
     }

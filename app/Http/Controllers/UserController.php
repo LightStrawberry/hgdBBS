@@ -165,4 +165,18 @@ class UserController extends Controller
         }
     }
 
+    public function sendMail()
+    {
+        $email = "21828604@qq.com";
+        $name = "lalala";
+        $uid = 1;
+        $code = 1;
+
+        $data = ['email'=>$email, 'name'=>$name, 'uid'=>$uid, 'activationcode'=>$code];
+        Mail::send('activemail', $data, function($message) use($data)
+        {
+            $message->to($data['email'], $data['name'])->subject('欢迎注册我们的网站，请激活您的账号！');
+        });
+    }
+
 }
