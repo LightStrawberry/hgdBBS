@@ -17,7 +17,7 @@
                 </div>
                 <ul class="clear">
                     <li>社区></li>
-                    <li>资源></li>
+                    <li><?php use App\Node; $a = $topic->node->parent_id; echo Node::find($a)->name;?>></li>
                     <li>{{ $topic->node->name }}</li>
                 </ul>
                 <h1>{{ $topic->title }}</h1>

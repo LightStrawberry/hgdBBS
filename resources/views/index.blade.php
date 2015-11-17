@@ -8,14 +8,17 @@
         <div class="main bc">
                 <ul class="first_tag tag_list clear pd_lm">
                         <li><a href="" class="tc_blue">最近</a></li>
-                        <li><a href="">资源</a></li>
-                        <li><a href="">分享</a></li>
-                        <li><a href="">交流</a></li>
-                        <li><a href="">经验</a></li>
+                        @foreach($nodes as $node)
+                        @if($node->parent_id == 0)
+                        <li><a href="">{{ $node->name }}</a></li>
+                        @endif
+                        @endforeach
                 </ul>
                 <ul class="second_tag bc_w tag_list  clear pd_lm">
                         @foreach($nodes as $node)
+                        @if($node->parent_id != 0)
                         <li><a href="node/{{ $node->node_url }}">{{ $node->name }}</a></li>
+                        @endif
                         @endforeach
                 </ul>
                 <div class="topic_body">
@@ -33,9 +36,9 @@
                                                 发布
                                                 <a  href="" class="tc_dark_grey">{{ $topic->user->name }}</a>
                                                 <span class="hidden-mobile">
-                                                        最后回复 <a  href="" >用户名</a> <abbr ><?php 
+                                                        最后回复 <a  href="" >{{ $topic->comments->count() }}</a> <abbr ><?php 
                                                         Carbon::setLocale('zh');
-                                                        echo $topic->updated_at->diffForHumans(Carbon::now()); 
+                                                        echo $topic->updated_at->diffForHumans(Carbon::now());
                                                         ?></abbr>
                                                 </span>
                                         </div>
