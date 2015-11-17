@@ -21,11 +21,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        if (Auth::check())
-        {
-            $a = User::all();
-            return $a;
-        }
+        $a = User::all();
+        return $a;
     }
 
     public function create()
@@ -39,11 +36,16 @@ class UserController extends Controller
         $password = Input::get('password');
         if (Auth::attempt(['email' => $email, 'password' => $password])) 
         {  
-            return redirect()->intended('/');
+            return redirect('/');
         }
         else
         {
-            echo "error";
+            return Response::json(
+                        [
+                            'status' => 1,
+                            'message' => "账号或密码错误",
+                        ]
+                    );
         }
     }
 
@@ -59,21 +61,18 @@ class UserController extends Controller
         return;
     }
 
-    public function show($id)
+    public function show($user)
     {
-        if (Auth::check())
-        {
-            $user = User::findOrFail($id);
-            $topics = $user->topics;
-            //$res = array_merge($user, $topics);
-            return Response::json(
-                        [
-                            'success' => true,
-                            'msg' => 200,
-                            'data' => $user->toJson(),
-                        ]
-                    );
-        }
+        $user = User::findOrFail($user);
+        $topics = $user->topics;
+        //$res = array_merge($user, $topics);
+        return Response::json(
+                    [
+                        'success' => true,
+                        'msg' => 200,
+                        'data' => $user->toJson(),
+                    ]
+                );
     }
 
     public function edit($id)
@@ -98,7 +97,14 @@ class UserController extends Controller
         $user->bio = $request->bio;
 
         $user->save();
-        return redirect()->intended('/user/'.$request->id);
+        //return redirect()->intended('/user/'.$request->id);
+        return Response::json(
+                        [
+                            'success' => true,
+                            'message' => '修改成功',
+                            'data' => $user->toJson(),
+                        ]
+                    );
     }
 
     /**
@@ -109,8 +115,23 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::find($id);
-        $user->delete();
+        if(Auth::check()&&Auth::user()->id == $id)
+        {
+            $user = User::find($id);
+            $user->delete();
+            return Response::json(
+                [
+                    'success' => true,
+                    'msg' => '删除',
+                ]
+            );
+        }
+        return Response::json(
+            [
+                'success' => false,
+                'msg' => 'error',
+            ]
+        );
     }
 
     public function avatar()

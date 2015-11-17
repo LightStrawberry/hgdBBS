@@ -1,0 +1,285 @@
+/*! HTML5 Boilerplate v5.0 | MIT License | http://h5bp.com/ */
+
+html {
+    background-color: #eee;
+    font-size: 62.5%;
+}
+
+
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}
+
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+    vertical-align: middle;
+}
+
+fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.browserupgrade {
+    margin: 0.2em 0;
+    background: #ccc;
+    color: #000;
+    padding: 0.2em 0;
+}
+
+
+
+body {
+    font-family :Microsoft Yahei, Helvetica, Helvetica Neue, Arial;
+    width: 110rem;
+    margin: 0 auto;
+}
+
+.wrapper {
+    width: 1100px;
+    margin:0 auto;
+   
+}
+.clear{
+    overflow: hidden;
+}
+
+/* ===================
+    首页开始
+   =================== */
+
+.header_container {
+    background: #fff url('../img/logo.png') no-repeat left 0  top 1.7rem ;
+    background-size: 9rem 1.2rem;
+    height: 4.6rem;
+}
+
+nav{
+    margin-left: 12rem;
+}
+nav li{
+    display: inline-block;
+    color: #00a0e9;
+}
+
+nav li a {
+    font-size: 1.4rem;
+    padding: 1.3rem 0;
+}
+nav li a,
+.tag_list a{
+    display: inline-block;
+    margin-right: 2rem;
+    float: left;
+
+}
+.first_tag a{
+     font-size: 1.4rem;
+     padding: 1.3rem 0;
+}
+.second_tag a{
+    font-size: 1.2rem;
+    padding: 0.65rem 0;
+}
+.nav_left{
+    float: left;
+}
+.nav_right{
+    float: right;
+}
+.form_control{
+    border-radius: 1rem;
+    border:1px solid #aaa;
+}
+
+.main{
+    width: 840px;
+    float: left;
+}
+.sidebar{
+    width: 250px;
+}
+.tag_list li{
+    float:left;
+}
+.second_tag{
+    background: #f5f5f5;
+}
+
+.avatar {
+    width: 50px;
+    height: 50px;
+    max-width: 50px !important;
+    max-height: 50px !important;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    -webkit-transition: .4s;
+    -moz-transition: .4s;
+    transition: .4s;
+    opacity: 0.8;
+}
+
+.topic {
+    min-height: 7rem;
+    border-bottom: 0.1rem solid #eee;
+    vertical-align: top;
+    position: relative;
+    display: block;
+}
+.media_left,
+.media_body,
+.media_right
+{
+    display: table-cell;
+    vertical-align: middle;
+}
+.media_body{
+    width: 100rem;
+    overflow: hidden;
+}
+.media_body .info{
+    margin-top: 1.3rem;
+}
+.info .tag{
+    display: inline-block;
+    text-align: center;
+    //width: 3.4rem;
+    padding-left: 0.3rem;
+    padding-right: 0.3rem;
+    border-radius:0.5rem;
+}
+.count a{ 
+    display: inline-block;
+    text-align: center;
+    width: 3.4rem;
+    border-radius:1rem;
+    height: 1.5rem;
+}
+.topic_footer ul{
+    height: 2.6rem;
+}
+.topic_footer ul li{
+    float: left;
+    padding: 0.8rem;
+    border-radius: 0.2rem;
+}
+.join{
+    text-align: center;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid #eee;
+    font-size: 1.28571429rem;
+}
+
+.login,.signup{
+    text-align: center;
+}
+
+.login{
+    padding: 2.3rem 0 1.3rem 0 ;
+}
+
+.signup{
+    padding:1.3rem 0 2.3rem 0; 
+}
+
+.login>a,.signup>a
+{
+    padding: .8rem 1rem;
+}
+
+
+.weibo_head{
+    margin-top: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.weibo_head>img{
+    height: 48px;
+    width: 48px;
+    margin: 15px 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.weibo_head>span{
+    padding: 1.5rem 0 11rem  0;
+    line-height: 1.4rem;
+}
+
+.weibo_head>a{
+    color: #fff;
+    padding: .3rem 1.1rem;
+    background-color: #ff6138;
+}
+
+.weibo_container{
+    min-height: 30rem;
+}
+
+.publish{
+    text-align: center;
+    margin-top: 1rem;
+    padding: 1rem 7.5rem;
+}
+
+.login1{
+    margin-top:10px; 
+    width: 470px;
+    text-align: center;
+}
+
+.login1>p{
+    font-size: 48px;
+    line-height: 48px;
+}
+
+.username{
+    margin-top: 52px;
+}
+
+.password{
+    margin:20px 0;
+}
+
+.login1>form>div>p{
+    text-align: left;
+    padding: 25px 190px 25px 0;
+    margin-top: 20px;
+    color: #ff6138;
+    font-size: 24px;
+    line-height: 32px;
+    width: 470px;
+}
+
+.loginbtn{
+    float: right;
+    font-size: 32px;
+    color: #fff;
+    background-color: #00a0e9;
+    padding: 25px 50px;
+    line-height: 32px;
+}
+/* ===================
+    首页结束
+   =================== */
+
+
+/* ==========================================================================
+   Media Queries
+   ========================================================================== */

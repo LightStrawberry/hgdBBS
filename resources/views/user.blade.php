@@ -1,4 +1,4 @@
-@include('head')
+@include('header')
 
 {!! Form::open(['url'=>'register']) !!}
    <div class="form-group">

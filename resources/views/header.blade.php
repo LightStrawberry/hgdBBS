@@ -1,37 +1,30 @@
-{!! Html::style('css/style.css') !!}
+<div class="header_container wrapper mg_bm">
+	<header >
+		<nav  class="clear">
+			<ul  class="nav_left">
+				<li><a href="{{ action('TopicController@index')}}" class="tc_blue">社区</a></li>
+				<li><a href="http://nav.hgdonline.net">导航</a></li>
+				<li><a href="#">微博</a></li>
+			</ul>
+			<ul class="nav_right">
+				<li>
+					<a href="">
+						<form class="" action="???" method="GET">
+							<div class="form_group">
+								<input  class="form_control" name="q" type="text" value="" placeholder="搜索本站内容">
+							</div>
 
-<div class="header">
-	<nav class="navbar navbar-inverse navbar-static-top navbar-default">
-	      <div class="container">
-	        <div class="navbar-header" id="navbar-header" data-turbolinks-permanent="">
-	        	<a href="/" class="navbar-brand"><b>南湖</b>呓语</a>
-	        </div>
-
-	        <span id="main-nav-menu" data-turbolinks-temporary="">
-	        	<ul class="nav navbar-nav">
-		        	<li class="active"><a href="/topics">社区</a></li>
-		        	<li class=""><a href="/">导航</a></li>
-		        	<li class=""><a href="/">微博</a></li>
-	        	</ul>
-	        </span>
-
-	        <ul class="nav user-bar navbar-nav navbar-right">
-	  <li><a href="/user/register">注册</a></li>
-	  <li><a href="/user/login">登录</a></li>
-	</ul>
-
-
-	<ul class="nav navbar-nav navbar-right">
-	    <li class="nav-search hidden-xs">
-	        <form class="navbar-form form-search" action="/search" method="GET">
-	           	<div class="form-group">
-	            	<input class="form-control" name="q" type="text" value="" placeholder="搜索本站内容">
-	           	</div>
-	            <i class="fa btn-search fa-search"></i>
-	            <i class="fa btn-close fa-times-circle"></i>
-	        </form>
-	    </li>
-	</ul>
-	</div>
-	</nav>
+						</form>
+					</a>
+				</li>
+				@if (Auth::check())
+				<li><a href="#">{{ Auth::user()->name }}</a></li>
+				<li><a href="{{ action('Auth\AuthController@getLogout')}}">登出</a></li>
+				@else
+				<li><a href="login">登录</a></li>
+				<li><a href="register">注册</a></li>
+				@endif
+			</ul>
+		</nav>
+	</header>
 </div>

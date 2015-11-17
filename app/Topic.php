@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Topic extends Model
 {
-	protected $fillable = ['title', 'content', 'published_at', 'user_id'];
+	protected $fillable = ['title', 'content', 'published_at', 'user_id', 'updated_at'];
 
 	//protected $hidden = array('user_id', 'node_id');
 
@@ -23,5 +23,10 @@ class Topic extends Model
     public function node()
     {
         return $this->belongsTo('App\Node');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
     }
 }

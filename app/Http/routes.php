@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', 'HomeController@index');
+Route::get('/', 'TopicController@index');
 
 Route::get('home', 'HomeController@index');
 
@@ -19,7 +19,7 @@ Route::resource('topic', 'TopicController');
 Route::resource('comment', 'CommentController');
 
 Route::get('user', 'UserController@index');
-Route::get('user/{id}', 'UserController@show');
+Route::get('user/{name}', 'UserController@show');
 Route::get('user/{id}/edit', 'UserController@edit');
 Route::delete('user/{id}', 'UserController@destroy');
 Route::put('user/update', 'UserController@update');

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use Auth;
 use Validator;
+use App\Topic;
 use App\Comment;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -52,6 +53,8 @@ class CommentController extends Controller
             return redirect()->back()->withErrors($v->errors());
         }else{
             $comment = Comment::create(array_merge(['user_id' => \Auth::user()->id], $request->all()));
+            $topic = Topic::find($id);
+            $topic->save();
             //$topic->tags()->attach($request->input('tag_list'));
             return redirect('/topic/'.$id);
         }

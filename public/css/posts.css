@@ -1,0 +1,145 @@
+.post_main>ul li{
+	float:left;
+	padding:1rem 0 0 1rem; 
+	font-size: 1.4rem;
+}
+.post_main h1{
+	padding-top: 0.5rem;
+	padding: 0.5rem 1rem;
+}
+.post_main .info{
+	padding: 0 1rem;
+}
+.post_main .pic{
+	padding: 1rem 1rem 0  0;
+}
+.post_content{
+	min-height: 10rem;
+	padding: 1rem 1rem;
+}
+.post_footer{
+	padding: 0.5rem 0 0.5rem 1rem;
+}
+.post_footer a:first-child{
+	margin-right: 1rem;
+}
+.post_replys{
+	margin-top: 2rem;
+}
+.post_replys span:first-child{
+	display: block;
+	padding: .5rem 1rem;
+	background: #f5f5f5;
+}
+.post_replys .reply{
+	padding: 1rem 1rem;
+}
+.reply_edit .head{
+	margin-top: 2rem;
+	background: #f5f5f5 url('../img/pic.png') no-repeat left 1rem top 0.5rem;
+	height: 2.5rem;
+}
+.reply_edit textarea{
+	width: 837px;
+	resize:none;
+}
+.like_repost{
+	display: table-cell;
+}
+.reply_edit button{
+	margin-top: 1rem;
+	padding: 0.5rem 1rem;
+}
+.like_repost  a{
+	display: table-cell;
+	padding: 0 0.5rem;
+}
+.publish_edit .head{
+	background-image: none;
+	padding-top: 0.5rem;
+	padding-left: 1rem;
+	height: 2.5rem;
+}
+.require_title{
+	display: block;
+	height: 1rem;
+	padding: 1rem;
+}
+.sidebar .require{
+	margin-top: 1px;
+	padding: .5rem 1rem;
+}
+.sidebar .require p{
+	font-size: 1.4rem;
+}
+.require div{
+	padding-bottom: .5rem;
+}
+.p_title{
+	padding: 1rem 1rem 0;
+	
+}
+.bdr{
+	border-bottom: 1px solid #00a0e9;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	float: left;
+}
+.p_title li{
+	padding-right: 1rem;
+	width: 5rem;
+	display: inline-block;
+	position: relative;
+	text-align: center;
+}
+span.large_bdr{
+	width: 70rem;
+}
+span.small_bdr{
+	width: 5rem;
+}
+.buy{
+	margin-top: 0.2rem;
+}
+.buy_form{
+	width: 39rem;
+	margin: 0 auto;
+	padding-top: 2rem;
+}
+.buy_form input{
+	border: 1px solid #666;
+	width: 160px;
+}
+.buy_form div{
+	margin: 0 auto;
+	padding-bottom: 1rem;
+}
+.buy_form span{
+	margin-right: 1rem;
+}
+.contact span{
+
+}
+.contact input{
+	float: left;
+	width: 105px;
+}
+.contact input.qq{
+	margin-right: 13px;
+}
+.contact p{
+	margin-bottom: 1rem;
+}
+.describle textarea{
+	width: 390px;
+	resize: none;
+	border:1px solid #666;
+}
+div.add img{
+	cursor: pointer;
+}
+.buy_btn {
+	margin-top: 1rem;
+	padding: 0.5rem 1rem;
+}

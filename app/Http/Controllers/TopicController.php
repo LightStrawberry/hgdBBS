@@ -8,8 +8,12 @@ use App\Tag;
 use App\Topic;
 use App\Node;
 use Auth;
+use App\User;
 use Validator;
+use Response;
+use App\Comment;
 use App\Http\Requests;
+use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 
 class TopicController extends Controller
@@ -21,10 +25,11 @@ class TopicController extends Controller
      */
     public function index()
     {
-        $topics = Topic::all();
-        //$roles = Topic::find(2)->tags;
-        //dd($roles);
-        return view("index",compact('topics'));
+        $topics = Topic::paginate(10)->sortByDesc('updated_at');;
+        $nodes = Node::all();
+        $user = Auth::check();
+
+        return view("index",compact('topics', 'nodes', 'user'));
     }
 
     /**
@@ -37,7 +42,7 @@ class TopicController extends Controller
         $tags = Tag::lists('name', 'id');
         $nodes = Node::lists('name', 'id');
 
-        return view("Topic",compact('tags', 'nodes'));
+        return view("topic_new",compact('tags', 'nodes'));
     }
 
     /**
@@ -84,7 +89,7 @@ class TopicController extends Controller
         }else{
             $current_id = 0;
         }
-        return view('xx',compact('topic', 'current_id'));
+        return view('topic',compact('topic', 'current_id'));
     }
 
     /**
@@ -119,18 +124,36 @@ class TopicController extends Controller
     public function destroy($id)
     {
         $topic = Topic::find($id);
-        if(Auth::user()->id = $topic->user_id)
+        if(Auth::check()&&Auth::user()->id = $topic->user_id)
         {
             $topic = Topic::find($id);
             $topic->delete();
-            return redirect('/');
+            return Response::json(
+                [
+                    'success' => true,
+                    'msg' => '删除成功',
+                ]
+            );
         }
+        return Response::json(
+                [
+                    'success' => false,
+                    'msg' => 'error',
+                ]
+            );
     }
 
     public function recent()
     {
         $topics = Topic::paginate(10);
         $topics->setPath('recent');
-        return $topics->toJson();
+        //return $topics->toJson();
+        return Response::json(
+                [
+                    'success' => true,
+                    'msg' => 200,
+                    'data' => $topics->toJson(),
+                ]
+            );
     }
 }
