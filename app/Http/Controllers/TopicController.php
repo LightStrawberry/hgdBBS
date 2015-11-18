@@ -32,13 +32,21 @@ class TopicController extends Controller
             $tab = 'recent';
         }
         $id = Node::where('node_url', '=' , $tab)->get()->toArray()[0]['id'];
+        $node_id = Node::where('parent_id', '=' , $id)->get()->toArray();
+        foreach ($node_id as $row) {
+            $a[] = (int)$row['id'];
+        }
+        //dd($a);
 
-        $topics = Topic::where('node_id', '=' , $id)->orderBy('updated_at', 'desc')->paginate(10);
+        $tab_active = Node::where('node_url', '=' , $tab)->get()->toArray()[0]['node_url'];
+
+        $topics = Topic::whereIn('node_id', $a)->orderBy('updated_at', 'desc')->paginate(5);
+        $topic_page = Topic::where('node_id', '=' , $id)->orderBy('updated_at', 'desc')->paginate(5)->toArray();
         $nodes = Node::where('parent_id', '=', $id)->get();
         $user = Auth::check();
         $tabs = Node::main_node();
 
-        return view("index",compact('topics', 'nodes', 'user', 'tabs'));
+        return view("index",compact('topics', 'nodes', 'user', 'tabs', 'tab_active', 'topic_page'));
     }
 
     /**

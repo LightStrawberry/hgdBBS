@@ -49,11 +49,11 @@
                         <div class="topic_footer clear">
                                 <ul class="pagination clear">
                                         <li class="prev previous_page disabled"><a href="#">← Prev</a></li>
-                                        <li class="active"><a rel="start" href="/topic?page=1">1</a></li> 
-                                        <li><a rel="next" href="/topic?page=2">2</a></li>
-                                        <li><a href="/topic?page=3">3</a></li> 
-                                        <li><a href="/topic?page=4">4</a></li>
-                                        <li><a href="/topic?page=5">5</a></li> 
+                                        <li class="active"><a rel="start" href="/topic?page={{ $topic_page['current_page'] }}">{{ $topic_page['current_page'] }}</a></li> 
+                                        <li><a rel="next" href="/?tab={{ $tab_active }}&page={{ $topic_page['current_page']+1 }}">{{ $topic_page['current_page']+1 }}</a></li>
+                                        <li><a href="/?tab={{ $tab_active }}&page=3">{{ $topic_page['current_page']+2 }}</a></li> 
+                                        <li><a href="/?tab={{ $tab_active }}&page=4">{{ $topic_page['current_page']+3 }}</a></li>
+                                        <li><a href="/?tab={{ $tab_active }}&page=5">{{ $topic_page['current_page']+4 }}</a></li>
                                         <li class="disabled"><a href="#">…</a></li> 
                                         <li><a href="/topic?page=68">68</a></li> 
                                         <li><a href="/topic?page=69">69</a></li>
