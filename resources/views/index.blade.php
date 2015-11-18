@@ -7,11 +7,8 @@
 <div class="main_container wrapper clear">
         <div class="main bc">
                 <ul class="first_tag tag_list clear pd_lm">
-                        <li><a href="" class="tc_blue">最近</a></li>
-                        @foreach($nodes as $node)
-                        @if($node->parent_id == 0)
-                        <li><a href="">{{ $node->name }}</a></li>
-                        @endif
+                        @foreach($tabs as $tab)
+                        <li><a href="?tab={{ $tab->node_url }}">{{ $tab->name }}</a></li>
                         @endforeach
                 </ul>
                 <ul class="second_tag bc_w tag_list  clear pd_lm">

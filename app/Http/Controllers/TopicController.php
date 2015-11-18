@@ -8,6 +8,7 @@ use App\Tag;
 use App\Topic;
 use App\Node;
 use Auth;
+use Input;
 use App\User;
 use Validator;
 use Response;
@@ -23,13 +24,21 @@ class TopicController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $topics = Topic::paginate(10)->sortByDesc('updated_at');;
-        $nodes = Node::all();
-        $user = Auth::check();
+        $tab = Input::get('tab');
+        if(!isset($tab))
+        {
+            $tab = 'recent';
+        }
+        $id = Node::where('node_url', '=' , $tab)->get()->toArray()[0]['id'];
 
-        return view("index",compact('topics', 'nodes', 'user'));
+        $topics = Topic::where('node_id', '=' , $id)->orderBy('updated_at', 'desc')->paginate(10);
+        $nodes = Node::where('parent_id', '=', $id)->get();
+        $user = Auth::check();
+        $tabs = Node::main_node();
+
+        return view("index",compact('topics', 'nodes', 'user', 'tabs'));
     }
 
     /**
@@ -40,7 +49,7 @@ class TopicController extends Controller
     public function create()
     {
         $tags = Tag::lists('name', 'id');
-        $nodes = Node::lists('name', 'id');
+        $nodes = Node::where('parent_id', '!=', 0)->get()->lists('name', 'id');
 
         return view("topic_new",compact('tags', 'nodes'));
     }

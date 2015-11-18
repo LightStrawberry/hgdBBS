@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Eloquent\Model;
 
 class Node extends Model
@@ -16,5 +17,12 @@ class Node extends Model
     public function nodes()
     {
     	return $this;
+    }
+
+    public static function main_node()
+    {
+    	$node = Node::where('parent_id', '=' ,0)->get();
+    	//$node = Node::where('parent_id', '=' ,0)->get()->toArray();
+    	return $node;
     }
 }

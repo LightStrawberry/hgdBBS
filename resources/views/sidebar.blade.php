@@ -3,11 +3,11 @@
         @if (!Auth::check())
         <div class="login bc">
                 <span>已经有帐号了？</span>
-                <a href="login" class="tc_white bc_b"  >登&nbsp;&nbsp;&nbsp;录</a>
+                <a href="{{ action('Auth\AuthController@getLogin')}}" class="tc_white bc_b"  >登&nbsp;&nbsp;&nbsp;录</a>
         </div>
         <div class="signup bc">
                 <span>还没有帐号吗？</span>
-                <a href="register" class="tc_white bc_b">注&nbsp;&nbsp;&nbsp;册</a>
+                <a href="action('Auth\AuthController@getRegister')" class="tc_white bc_b">注&nbsp;&nbsp;&nbsp;册</a>
         </div> <!-- 登录注册 -->
         @else
         <div class="login bc">
@@ -30,6 +30,6 @@
         </div> <!-- 微博展示 -->
 
         <div class="publish bc_b tc_white">
-                <a href="topic/create" class="tc_white">发布主题</a>
+                <a href="{{ action('TopicController@create')}}" class="tc_white">发布主题</a>
         </div><!-- 发布按钮 -->
 </div>

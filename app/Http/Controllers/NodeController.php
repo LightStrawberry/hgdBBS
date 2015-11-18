@@ -36,13 +36,7 @@ class NodeController extends Controller
 
         $node = Node::where('parent_id', '=' ,0)->get()->toArray();
         //var_dump($node);
-        return Response::json(
-                        [
-                            'msg' => 200,
-                            'success' => true,
-                            'data' => $node,
-                        ]
-                    );
+        return $node;
     }
 
     /**
