@@ -46,6 +46,9 @@ Route::post('/avatar/upload','UserController@avatarUpload');
 Route::get('node', 'nodeController@index');
 Route::get('main_node', 'nodeController@main_node');
 Route::get('node/{node}', 'nodeController@show');
+Route::get('node/{node}/edit', 'nodeController@edit');
+Route::put('node/{node}', 'nodeController@update');
+Route::delete('node/{node}', 'nodeController@destroy');
 Route::post('node', 'nodeController@store');
 
 

@@ -57,8 +57,13 @@ class NodeController extends Controller
      */
     public function store(Request $request)
     {
-        $node = Request::all()->toJson();
-        return $node;
+        //dd($request->all());
+        $name = $request->all()['name'];
+        $node_url = $request->all()['node_url'];
+        $description = $request->all()['description'];
+        $parent_id = $request->all()['parent_id'];
+        Node::firstOrCreate(array_merge(['name' => $name], ['node_url' => $node_url], ['description' => $description], ['parent_id' => $parent_id]));
+        return redirect('/dashboard');
     }
 
     /**
@@ -94,9 +99,10 @@ class NodeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($node_url)
     {
-        //
+        $node = Node::findByNodeUrlOrFail($node_url);
+        return view("admin/node_edit", compact('node'));
     }
 
     /**
@@ -108,7 +114,16 @@ class NodeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $node = Node::find($id);
+
+        $node->name = $request->all()['name'];
+        $node->node_url = $request->all()['node_url'];
+        $node->description = $request->all()['description'];
+        $node->parent_id = $request->all()['parent_id'];
+
+        $node->save();
+
+        return redirect('/dashboard');
     }
 
     /**
@@ -119,6 +134,8 @@ class NodeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $node = Node::find($id);
+        $node->delete();
+        return redirect('/dashboard');
     }
 }

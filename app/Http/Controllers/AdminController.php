@@ -26,8 +26,10 @@ class AdminController extends Controller
      */
     public function index()
     {
+        $topics = Topic::orderBy('updated_at', 'desc')->paginate(10);
         $nodes = Node::all();
-        return view('admin/dashboard', compact('nodes'));
+        $users = User::all();
+        return view('admin/dashboard', compact('topics', 'nodes', 'users'));
     }
 
     /**
