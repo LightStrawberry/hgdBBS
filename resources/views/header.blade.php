@@ -9,7 +9,7 @@
 			<ul class="nav_right">
 				<li>
 					<a href="">
-						<form class="" action="???" method="GET">
+						<form class="" action="" method="GET">
 							<div class="form_group">
 								<input  class="form_control" name="q" type="text" value="" placeholder="搜索本站内容">
 							</div>
@@ -18,8 +18,8 @@
 					</a>
 				</li>
 				@if (Auth::check())
-				<li><a href="#">{{ Auth::user()->name }}</a></li>
-				<li><a href="{{ action('Auth\AuthController@getLogout')}}">登出</a></li>
+				<li><a href="{{ action('UserController@show', [Auth::user()->name]) }}">{{ Auth::user()->name }}</a></li>
+				<li><a href="{{ action('Auth\AuthController@getLogout') }}">登出</a></li>
 				@else
 				<li><a href="login">登录</a></li>
 				<li><a href="register">注册</a></li>

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Topic extends Model
 {
-	protected $fillable = ['title', 'content', 'published_at', 'user_id', 'updated_at'];
+	protected $fillable = ['title', 'content', 'published_at', 'user_id', 'updated_at', 'node_id'];
 
 	//protected $hidden = array('user_id', 'node_id');
 

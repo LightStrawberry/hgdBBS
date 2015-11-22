@@ -38,7 +38,7 @@
       @endforeach
     </ul>
     @endif
-  </div> <!-- #main -->
+    </div> <!-- #main -->
   @include('sidebar_topic')
 </div> <!-- #main-container -->
 <div class="footer-container">

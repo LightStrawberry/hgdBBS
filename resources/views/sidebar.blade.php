@@ -28,8 +28,9 @@
                         <p>这是内容</p>
                 </div> <!-- 微博内容 -->
         </div> <!-- 微博展示 -->
-
+        @if (Auth::check())
         <div class="publish bc_b tc_white">
                 <a href="{{ action('TopicController@create')}}" class="tc_white">发布主题</a>
         </div><!-- 发布按钮 -->
+        @endif
 </div>

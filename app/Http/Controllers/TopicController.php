@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Tag;
 use App\Topic;
 use App\Node;
@@ -12,6 +11,7 @@ use Input;
 use App\User;
 use Validator;
 use Response;
+use App\Like;
 use App\Comment;
 use App\Http\Requests;
 use Carbon\Carbon;
@@ -27,24 +27,34 @@ class TopicController extends Controller
     public function index(Request $request)
     {
         $tab = Input::get('tab');
-        if(!isset($tab))
+        if(!isset($tab)|$tab == "recent")
         {
             $tab = 'recent';
+            $topics = Topic::orderBy('updated_at', 'desc')->paginate(5);
+            $id = 0;
+            $tab_active = "recent";
+            $topic_page = Topic::orderBy('updated_at', 'desc')->paginate(5)->toArray();
         }
-        $id = Node::where('node_url', '=' , $tab)->get()->toArray()[0]['id'];
-        $node_id = Node::where('parent_id', '=' , $id)->get()->toArray();
-        foreach ($node_id as $row) {
-            $a[] = (int)$row['id'];
+        else
+        {
+            $a = array();
+            $id = Node::where('node_url', '=' , $tab)->get()->toArray()[0]['id'];
+            $node_id = Node::where('parent_id', '=' , $id)->get()->toArray();
+            foreach ($node_id as $row) {
+                $a[] = (int)$row['id'];
+            }
+
+            $tab_active = Node::where('node_url', '=' , $tab)->get()->toArray()[0]['node_url'];
+
+            $topics = Topic::whereIn('node_id', $a)->orderBy('updated_at', 'desc')->paginate(5);
+            $topic_page = Topic::whereIn('node_id', $a)->orderBy('updated_at', 'desc')->paginate(5)->toArray();
         }
-        //dd($a);
-
-        $tab_active = Node::where('node_url', '=' , $tab)->get()->toArray()[0]['node_url'];
-
-        $topics = Topic::whereIn('node_id', $a)->orderBy('updated_at', 'desc')->paginate(5);
-        $topic_page = Topic::where('node_id', '=' , $id)->orderBy('updated_at', 'desc')->paginate(5)->toArray();
         $nodes = Node::where('parent_id', '=', $id)->get();
         $user = Auth::check();
         $tabs = Node::main_node();
+
+        //$topic = $topics->first();
+        //dd($topic->comments->last()->user->name);
 
         return view("index",compact('topics', 'nodes', 'user', 'tabs', 'tab_active', 'topic_page'));
     }
@@ -83,7 +93,8 @@ class TopicController extends Controller
             //return redirect()->back()->withErrors($v->errors());
             return $v->errors()->toJson();
         }else{
-            $topic = Topic::create(array_merge(['user_id' => \Auth::user()->id], $request->all()));
+            $node_id = $request->node;
+            $topic = Topic::create(array_merge(['user_id' => \Auth::user()->id], ['node_id' => $node_id], $request->all()));
             $topic->tags()->attach($request->input('tag_list'));
             return redirect('/');
         }
@@ -100,13 +111,15 @@ class TopicController extends Controller
         $topic = Topic::find($id);
         //$comments = Topic::comments()->id;
         //return $topic->toJson();
+        $currentUser = Auth::user();
+
         if(Auth::check())
         {
             $current_id = Auth::user()->id;
         }else{
             $current_id = 0;
         }
-        return view('topic',compact('topic', 'current_id'));
+        return view('topic',compact('topic', 'current_id', 'currentUser'));
     }
 
     /**
@@ -172,5 +185,10 @@ class TopicController extends Controller
                     'data' => $topics->toJson(),
                 ]
             );
+    }
+
+    public function test()
+    {
+        return view('test');
     }
 }

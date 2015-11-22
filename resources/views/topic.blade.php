@@ -33,7 +33,11 @@
                     </div>
                 </div>
                 <div class="post_footer bc_w">
-                    <a href="">收藏</a>
+                    @if ($currentUser && App\Like::isUserLikedTopic($currentUser, $topic))
+                    <a href="/like/{{ $topic->id }}" class="">取消收藏</a>
+                    @else
+                    <a href="/like/{{ $topic->id }}" class="">收藏</a>
+                    @endif
                     <a href="">微博转发</a>
                 </div>
                 <div class="post_replys bc">
@@ -55,6 +59,7 @@
                                 </span>
                             </div>
                         </div>
+                        @if (Auth::check())
                         <div class="like_repost  ">
                             <a>
                                 {!! Html::image('img/like.png') !!}
@@ -63,9 +68,11 @@
                                 {!! Html::image('img/reply.png') !!}
                             </a>
                         </div>
+                        @endif
                     </div>
                     @endforeach
                 </div>
+                @if (Auth::check())
                 <div class="reply_edit">
                     <div class="head"></div>
                     {!! Form::open(['url'=>'comment']) !!}
@@ -79,6 +86,7 @@
                        </div>
                     {!! Form::close() !!}
                 </div>
+                @endif
             </div> <!-- #main -->
             @include('sidebar')
         </div> <!-- #main-container -->

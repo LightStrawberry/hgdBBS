@@ -1,13 +1,11 @@
-{!! Html::style('css/normalize.css') !!}
-{!! Html::style('css/posts.css') !!}
-{!! Html::style('css/main.css') !!}
-{!! Html::style('css/page_structure.css') !!}
-{!! Html::script('js/jquery.js') !!}
+@foreach($nodes as $node)
 
-@include('header')
+<p>{{ $node->name }}</p>
 
+@endforeach
 
-{!! Form::open(array('url' => 'user/update', 'method' => 'put')) !!}
+<p>添加节点</p>
+{!! Form::open(array('url' => 'node/update', 'method' => 'put')) !!}
 
    <div class="form-group">
        {!! Form::label('name','用户名:') !!}

@@ -63,22 +63,18 @@ class UserController extends Controller
 
     public function show($user)
     {
-        $user = User::findOrFail($user);
+        //相比于第二种方式 在model中新增方法来得更优雅一些！
+        $user = User::findByUsernameOrFail($user);
         $topics = $user->topics;
-        //$res = array_merge($user, $topics);
-        return Response::json(
-                    [
-                        'success' => true,
-                        'msg' => 200,
-                        'data' => $user->toJson(),
-                    ]
-                );
+        //$info = User::findByUsernameOrFail('name', '=' ,$user)->get()->toArray()[0];
+        //$num = $info['id'];
+        //$topics = User::findOrFail($num)->topics;
+        return view('member', compact('user', 'topics'));
     }
 
-    public function edit($id)
+    public function edit($user)
     {
-        $user = User::findOrFail($id);
-        //dd($user);
+        $user = User::findByUsernameOrFail($user);
         return view("user_update", compact('user'));
     }
 
@@ -97,7 +93,8 @@ class UserController extends Controller
         $user->bio = $request->bio;
 
         $user->save();
-        //return redirect()->intended('/user/'.$request->id);
+        return redirect()->intended('/user/'.$request->id);
+        /*
         return Response::json(
                         [
                             'success' => true,
@@ -105,6 +102,7 @@ class UserController extends Controller
                             'data' => $user->toJson(),
                         ]
                     );
+        */
     }
 
     /**
@@ -198,6 +196,14 @@ class UserController extends Controller
         {
             $message->to($data['email'], $data['name'])->subject('欢迎注册我们的网站，请激活您的账号！');
         });
+    }
+
+    public function likes($user)
+    {
+        $user = User::findByUsernameOrFail($user);
+        $topics = $user->likeTopics()->paginate(10);
+        dd($topics);
+        //return View::make('users.favorites', compact('user', 'topics'));
     }
 
 }

@@ -46,4 +46,18 @@ class User extends Model implements AuthenticatableContract,
     {
         return $this->hasMany('App\comment');
     }
+
+    public static function findByUsernameOrFail($name, $columns = array('*')) 
+    {
+        if ( ! is_null($user = static::wherename($name)->first($columns))) {
+            return $user;
+        }
+
+        throw new ModelNotFoundException;
+    }
+
+    public function likeTopics()
+    {
+        return $this->belongsToMany('App\Topic', 'likes');
+    }
 }

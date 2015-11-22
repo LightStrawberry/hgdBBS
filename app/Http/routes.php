@@ -19,11 +19,16 @@ Route::resource('topic', 'TopicController');
 Route::resource('comment', 'CommentController');
 
 Route::get('user', 'UserController@index');
-Route::get('user/{name}', 'UserController@show');
-Route::get('user/{id}/edit', 'UserController@edit');
+Route::get('member/{name}', 'UserController@show');
+Route::get('member/{name}/edit', 'UserController@edit');
+Route::get('member/{name}/like', 'UserController@likes');
 Route::delete('user/{id}', 'UserController@destroy');
 Route::put('user/update', 'UserController@update');
 Route::get('user/mail', 'UserController@sendMail');
+Route::get('test', 'TopicController@test');
+Route::get('admin', 'AdminController@login');
+Route::post('admin', 'AdminController@check');
+Route::get('dashboard', 'AdminController@index');
 
 Route::get('login', 'Auth\AuthController@getLogin');
 Route::post('login', 'UserController@checkout');
@@ -45,4 +50,6 @@ Route::post('node', 'nodeController@store');
 
 
 Route::get('recent', 'TopicController@recent');
-//Route::get('recent/{page}', 'TopicController@recent');
+
+
+Route::get('like/{id}', 'LikeController@createOrDelete');
