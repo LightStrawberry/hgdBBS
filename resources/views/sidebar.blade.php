@@ -7,7 +7,7 @@
         </div>
         <div class="signup bc">
                 <span>还没有帐号吗？</span>
-                <a href="action('Auth\AuthController@getRegister')" class="tc_white bc_b">注&nbsp;&nbsp;&nbsp;册</a>
+                <a href="{{ action('Auth\AuthController@getRegister') }}" class="tc_white bc_b">注&nbsp;&nbsp;&nbsp;册</a>
         </div> <!-- 登录注册 -->
         @else
         <div class="login bc">

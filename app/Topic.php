@@ -29,4 +29,9 @@ class Topic extends Model
     {
         return $this->belongsTo('App\User');
     }
+
+    public function votes()
+    {
+        return $this->morphMany('App\Vote', 'votable');
+    }
 }

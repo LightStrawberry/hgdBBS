@@ -8,6 +8,7 @@ use Auth;
 use Validator;
 use App\Topic;
 use App\User;
+use App\Vote;
 use App\Comment;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -49,24 +50,14 @@ class CommentController extends Controller
         $v = Validator::make($request->all(), [
             'content' => 'required|min:8|max:255',
         ]);
+
         if ($v->fails())
         {
             return redirect()->back()->withErrors($v->errors());
         }else
         {
             $content = $request->all()['content'];
-            if(preg_match("/@([^@]+?)([\s|:]|$)/is", $content, $matches))
-            {
-                //对$content进行处理 使@生成link存入数据库
-                preg_match_all("/@([^@]+?)([\s|:]|$)/is", $content, $matches);
-                $user = User::findByUsernameOrFail($matches[1][0]);
-
-                $url = action('UserController@show', [$user->name]);
-                $url = "<a href=\"".$url."\">@$user->name </a>";
-
-                $content = str_replace($matches[0][0], $url, $content);
-            }
-
+            $content = strip_tags($content);
             $comment = Comment::create(array_merge(['user_id' => \Auth::user()->id], ['content' => $content] ,['topic_id' => $request->all()['topic_id']], ['number' => $request->all()['number']]));
             $topic = Topic::find($id);
             $topic->save();
@@ -75,12 +66,31 @@ class CommentController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    public function vote($id)
+    {
+        $comment = Comment::find($id);
+        if (Auth::id() == $comment->user_id) {
+            return 'Can not vote your feedback';
+        }
+
+        if ($comment->votes()->ByWhom(Auth::id())->WithType('upvote')->count()) {
+            // click twice for remove upvote
+            $comment->votes()->ByWhom(Auth::id())->WithType('upvote')->delete();
+            $comment->decrement('vote_count', 1);
+        } elseif ($comment->votes()->ByWhom(Auth::id())->WithType('downvote')->count()) {
+            // user already clicked downvote once
+            $comment->votes()->ByWhom(Auth::id())->WithType('downvote')->delete();
+            $comment->votes()->create(['user_id' => Auth::id(), 'is' => 'upvote']);
+            $comment->increment('vote_count', 2);
+        } else {
+            // first time click
+            $comment->votes()->create(['user_id' => Auth::id(), 'is' => 'upvote']);
+            $comment->increment('vote_count', 1);
+            //Notification::notify('reply_upvote', Auth::user(), $reply->user, $reply->topic, $reply);
+        }
+        return redirect('/topic/'.$comment->topic->id);
+    }
+
     public function show($id)
     {
 

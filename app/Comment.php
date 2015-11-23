@@ -19,4 +19,25 @@ class Comment extends Model
     {
     	return $this->belongsTo('App\Topic');
     }
+
+    public function votes()
+    {
+        return $this->morphMany('App\Vote', 'votable');
+    }
+
+    public static function at($content)
+    {
+        if(preg_match("/@([^@]+?)([\s|:]|$)/is", $content, $matches))
+            {
+                //对$content进行处理 使@生成link存入数据库
+                preg_match_all("/@([^@]+?)([\s|:]|$)/is", $content, $matches);
+                $user = User::findByUsernameOrFail($matches[1][0]);
+
+                $url = action('UserController@show', [$user->name]);
+                $url = "<a href=\"".$url."\">@$user->name </a>";
+
+                $content = str_replace($matches[0][0], $url, $content);
+            }
+        return $content;
+    }
 }

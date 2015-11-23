@@ -56,3 +56,6 @@ Route::get('recent', 'TopicController@recent');
 
 
 Route::get('like/{id}', 'LikeController@createOrDelete');
+
+Route::get('comment/vote/{id}', 'CommentController@vote');
+

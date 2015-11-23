@@ -30,10 +30,10 @@ class TopicController extends Controller
         if(!isset($tab)|$tab == "recent")
         {
             $tab = 'recent';
-            $topics = Topic::orderBy('updated_at', 'desc')->paginate(5);
+            $topics = Topic::orderBy('updated_at', 'desc')->paginate(10);
             $id = 0;
             $tab_active = "recent";
-            $topic_page = Topic::orderBy('updated_at', 'desc')->paginate(5)->toArray();
+            $topic_page = Topic::orderBy('updated_at', 'desc')->paginate(10)->toArray();
         }
         else
         {
@@ -46,8 +46,8 @@ class TopicController extends Controller
 
             $tab_active = Node::where('node_url', '=' , $tab)->get()->toArray()[0]['node_url'];
 
-            $topics = Topic::whereIn('node_id', $a)->orderBy('updated_at', 'desc')->paginate(5);
-            $topic_page = Topic::whereIn('node_id', $a)->orderBy('updated_at', 'desc')->paginate(5)->toArray();
+            $topics = Topic::whereIn('node_id', $a)->orderBy('updated_at', 'desc')->paginate(10);
+            $topic_page = Topic::whereIn('node_id', $a)->orderBy('updated_at', 'desc')->paginate(10)->toArray();
         }
         $nodes = Node::where('parent_id', '=', $id)->get();
         $user = Auth::check();
@@ -119,6 +119,15 @@ class TopicController extends Controller
         }else{
             $current_id = 0;
         }
+
+        //dd($topic->comments);
+        // $comments = $topic->comments;
+        // foreach ($topic->comments as $row ) {
+        //     echo Comment::at($row->content);
+        // }
+        // die();
+
+
         return view('topic',compact('topic', 'current_id', 'currentUser'));
     }
 

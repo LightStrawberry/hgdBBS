@@ -50,7 +50,7 @@
                         </div>
                         <div class="infos media_body">
                             <div class=" media_heading">
-                                <p>{!! $comment->content !!}</p>
+                                <p>{!! $comment->at($comment->content) !!}</p>
                             </div>
                             <div class="info">
                                 <a class="author" href="">{{ $comment->user->name }}</a>
@@ -61,8 +61,9 @@
                             </div>
                         </div>
                         @if (Auth::check())
-                        <div class="like_repost  ">
-                            <a>
+                        <div class="like_repost">
+                            <a >{{ $comment->vote_count }}</a>
+                            <a href="{{ action('CommentController@vote', ['id' => $comment->id]) }}">
                                 {!! Html::image('img/like.png') !!}
                             </a>
                             <a href="javascript:void(0)" onclick="replyOne('{{{ $comment->user->name }}}');">
