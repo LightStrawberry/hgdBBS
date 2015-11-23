@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Auth;
 use Validator;
 use App\Topic;
+use App\User;
 use App\Comment;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -51,8 +52,22 @@ class CommentController extends Controller
         if ($v->fails())
         {
             return redirect()->back()->withErrors($v->errors());
-        }else{
-            $comment = Comment::create(array_merge(['user_id' => \Auth::user()->id], $request->all()));
+        }else
+        {
+            $content = $request->all()['content'];
+            if(preg_match("/@([^@]+?)([\s|:]|$)/is", $content, $matches))
+            {
+                //对$content进行处理 使@生成link存入数据库
+                preg_match_all("/@([^@]+?)([\s|:]|$)/is", $content, $matches);
+                $user = User::findByUsernameOrFail($matches[1][0]);
+
+                $url = action('UserController@show', [$user->name]);
+                $url = "<a href=\"".$url."\">@$user->name </a>";
+
+                $content = str_replace($matches[0][0], $url, $content);
+            }
+
+            $comment = Comment::create(array_merge(['user_id' => \Auth::user()->id], ['content' => $content] ,['topic_id' => $request->all()['topic_id']], ['number' => $request->all()['number']]));
             $topic = Topic::find($id);
             $topic->save();
             //$topic->tags()->attach($request->input('tag_list'));

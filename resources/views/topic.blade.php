@@ -3,6 +3,7 @@
 {!! Html::style('css/main.css') !!}
 {!! Html::style('css/page_structure.css') !!}
 {!! Html::script('js/jquery.js') !!}
+{!! Html::script('js/index.js') !!}
 
 <body>
     <!--[if lt IE 8]>
@@ -49,10 +50,10 @@
                         </div>
                         <div class="infos media_body">
                             <div class=" media_heading">
-                                <a title="" href="">{{ $comment->content }}</a>
+                                <p>{!! $comment->content !!}</p>
                             </div>
                             <div class="info">
-                                <a class="" href="">{{ $comment->user->name }}</a>
+                                <a class="author" href="">{{ $comment->user->name }}</a>
                                 <span>#1</span>
                                 <span ><?php Carbon::setLocale('zh');
                                 echo $comment->updated_at->diffForHumans(Carbon::now());?>
@@ -64,7 +65,7 @@
                             <a>
                                 {!! Html::image('img/like.png') !!}
                             </a>
-                            <a>
+                            <a href="javascript:void(0)" onclick="replyOne('{{{ $comment->user->name }}}');">
                                 {!! Html::image('img/reply.png') !!}
                             </a>
                         </div>
@@ -77,7 +78,7 @@
                     <div class="head"></div>
                     {!! Form::open(['url'=>'comment']) !!}
                        <div class="">
-                           {!! Form::textarea('content',null,['class'=>'form-control']) !!}
+                           {!! Form::textarea('content',null,['class'=>'form-control', 'id' => 'reply_content']) !!}
                        </div>
                        {!! Form::hidden('topic_id', $topic->id) !!}
                        {!! Form::hidden('number', $topic->comments->count()+1) !!}

@@ -20,11 +20,11 @@
         @endif
         <div class="weibo bc">
                 <div class="weibo_head">
-                        <img src="imag/1.jpg" />
+                        <img src="" />
                         <span class="tc_blue">湖工大在线</span>
                         <a href="#">关注</a>
                 </div>
-                <div class="weibo_container">   
+                <div class="weibo_container"> 
                         <p>这是内容</p>
                 </div> <!-- 微博内容 -->
         </div> <!-- 微博展示 -->

@@ -31,7 +31,7 @@
 
 @if ($current_id == $topic->user_id)
 	{!! Form::open(array('url' => 'topic/' . $topic->id, 'class' => 'pull-right')) !!}
-        {!! Form::hidden('_method', 'DELETE') !!}
-        {!! Form::submit('Delete this topic', array('class' => 'btn btn-warning')) !!}
-    {!! Form::close() !!}
+      {!! Form::hidden('_method', 'DELETE') !!}
+      {!! Form::submit('Delete this topic', array('class' => 'btn btn-warning')) !!}
+  {!! Form::close() !!}
 @endif
