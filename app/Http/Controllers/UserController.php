@@ -69,7 +69,7 @@ class UserController extends Controller
         //$info = User::findByUsernameOrFail('name', '=' ,$user)->get()->toArray()[0];
         //$num = $info['id'];
         //$topics = User::findOrFail($num)->topics;
-        return view('member', compact('user', 'topics'));
+        return view('profile', compact('user', 'topics'));
     }
 
     public function edit($user)

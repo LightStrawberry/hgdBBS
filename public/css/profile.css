@@ -1,0 +1,39 @@
+.profile a.username{
+	font-size: 1.8rem;
+	color: rgb(49,49,49);
+}
+.info p>span{
+	color: rgb(49,49,49);
+}
+
+.status_panel{
+	margin-top: 1rem;
+}
+.status_panel ul{
+	overflow: hidden;
+}
+.status_panel li{
+	font-size: 1.4rem;
+	margin-left: 1rem;
+	float: left;
+	padding: 0.6rem 0;
+}
+.status_panel .reply{
+	padding: 1rem;
+}
+.status_panel .reply{
+	overflow: hidden;
+}
+.status_panel .reply div:first-child {
+	width: 88%;
+	float: left;
+}
+.status_panel .reply div:last-child{
+	width: 10%;
+	float: right;
+}
+.ellipsis{
+	overflow: hidden;
+	white-space: nowrap; 
+	text-overflow: ellipsis;
+}

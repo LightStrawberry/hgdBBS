@@ -44,38 +44,18 @@
                                         <a  class="bc_b tc_white">{{ $topic->comments->count() }}</a>
                                 </div>
                         </div>
-                        @endforeach                          
+                        @endforeach
 
-                        <div class="topic_footer clear">
-                                <ul class="pagination clear">
-                                        <li class="prev previous_page disabled"><a href="/topic?page={{ $topic_page['current_page']-1 }}">← Prev</a></li>
-                                        @if ($topic_page['current_page'] > 3)
-                                        <li class="disabled"><a href="#">…</a></li>
-                                        <li><a href="/?tab={{ $tab_active }}&page={{ $topic_page['current_page']-2 }}">{{ $topic_page['current_page']-2 }}</a></li>
-                                        <li><a href="/?tab={{ $tab_active }}&page={{ $topic_page['current_page']-1 }}">{{ $topic_page['current_page']-1 }}</a></li>
-                                        <li class="active"><a rel="start" href="/topic?page={{ $topic_page['current_page'] }}">{{ $topic_page['current_page'] }}</a></li> 
-                                        <li><a rel="next" href="/?tab={{ $tab_active }}&page={{ $topic_page['current_page']+1 }}">{{ $topic_page['current_page']+1 }}</a></li>
-                                        <li><a href="/?tab={{ $tab_active }}&page=3">{{ $topic_page['current_page']+2 }}</a></li>
-                                        @else
-                                        <li class="@if($topic_page['current_page'] ==1)active @endif"><a href="/?tab={{ $tab_active }}&page=1">1</a></li>
-                                        <li class="@if($topic_page['current_page'] ==2)active @endif"><a href="/?tab={{ $tab_active }}&page=2">2</a></li>
-                                        <li class="@if($topic_page['current_page'] ==3)active @endif"><a rel="start" href="/topic?page=3">3</a></li> 
-                                        <li><a rel="next" href="/?tab={{ $tab_active }}&page=4">4</a></li>
-                                        <li><a href="/?tab={{ $tab_active }}&page=5">5</a></li>
-                                        @endif
-                                        @if ($topic_page['last_page'] - $topic_page['current_page'] > 0)
-                                        <li class="disabled"><a href="#">…</a></li>
-                                        <li><a href="/?tab={{ $tab_active }}&page={{ $topic_page['last_page']-1 }}">{{ $topic_page['last_page']-1 }}</a></li>
-                                        <li><a href="/?tab={{ $tab_active }}&page={{ $topic_page['last_page'] }}">{{ $topic_page['last_page'] }}</a></li>
-                                        <li class="next next_page "><a rel="next" href="/topic?page={{ $topic_page['current_page']-1 }}">Next →</a></li></ul>
-                                        @endif
-                                        </div> 
-                                </div>
-                        </div> <!-- #main -->
-                        @include('sidebar')
-                </div> <!-- #main-container -->
-                <div class="footer-container">
-                        <footer class="">
-
-                        </footer>
+                        @include('paginate')
                 </div>
+
+        </div> <!-- #main -->
+        @include('sidebar')
+        </div> <!-- #main-container -->
+        <div class="footer-container">
+        <footer class="">
+
+        </footer>
+</div>
+
+
