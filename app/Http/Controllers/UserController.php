@@ -65,11 +65,25 @@ class UserController extends Controller
     {
         //相比于第二种方式 在model中新增方法来得更优雅一些！
         $user = User::findByUsernameOrFail($user);
-        $topics = $user->topics;
         //$info = User::findByUsernameOrFail('name', '=' ,$user)->get()->toArray()[0];
         //$num = $info['id'];
         //$topics = User::findOrFail($num)->topics;
-        return view('profile', compact('user', 'topics'));
+
+        $tab = Input::get('tab');
+        if($tab == 'publish')
+        {
+            $responses = $user->topics;
+        }else if($tab == 'like')
+        {
+            $responses = $user->likeTopics;
+        }else if($tab == 'response')
+        {
+            $responses = $user->comments;
+        }else{
+            $tab = 'recent';
+            $responses = $user->topics;
+        }
+        return view('profile', compact('user', 'responses', 'tab'));
     }
 
     public function edit($user)

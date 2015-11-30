@@ -25,22 +25,35 @@
                 </div>   
                 <div class="status_panel bc">
                         <ul class="bc_w">
-                                <a><li class="tc_blue">最近</li></a>
-                                <a href="ss"><li>发布</li></a>
-                                <a href="ss"><li>回复</li></a>
-                                <a href="ss"><li>收藏</li></a>
+                                <a href="?tab=recent"><li @if($tab == 'recent') class="tc_blue" @endif>最近</li></a>
+                                <a href="?tab=publish"><li @if($tab == 'publish') class="tc_blue" @endif>发布</li></a>
+                                <a href="?tab=response"><li @if($tab == 'response') class="tc_blue" @endif>回复</li></a>
+                                <a href="?tab=like"><li @if($tab == 'like') class="tc_blue" @endif>收藏</li></a>
                         </ul>
-                        @foreach($topics as $topic)
+                        @if($tab != 'response')
+                        @foreach($responses as $response)
                         <div class="reply">
                                 <div>
-                                        <p class="ellipsis"><a href=""><问题问题问题问题问题问题问题问题问题问题问题问题问题问题问题问题问题问题问题问题问题问题？></a></p>
-                                        <p><a href="" class="tc_blue">我的</a>回复：<span>回答回答</span></p>
+                                        <p class="ellipsis"><a href="">{{ $response->title }}</a></p>
                                 </div>
                                 <div>
-                                        <span>2015/7/7</span>
+                                        <span>{{ $response->updated_at }}</span>
                                 </div>
                         </div>
                         @endforeach
+                        @else
+                        @foreach($responses as $response)
+                        <div class="reply">
+                                <div>
+                                        <p class="ellipsis"><a href="">帖子：{{ $response->topic->title }}</a></p>
+                                        <p><a href="" class="tc_blue">我的</a>回复：<span>{{ $response->content }}</span></p>
+                                </div>
+                                <div>
+                                        <span>{{ $response->updated_at }}</span>
+                                </div>
+                        </div>
+                        @endforeach
+                        @endif
                 </div>                         
         </div> <!-- #main -->
         @include('sidebar')
